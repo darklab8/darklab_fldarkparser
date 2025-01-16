@@ -57,14 +57,14 @@ func (t *Route) GetCruiseSpeed() int {
 	if t.is_disabled {
 		return 0
 	}
-	return t.g.graph.AvgCruiseSpeed
+	return t.g.Graph.AvgCruiseSpeed
 }
 
 func (t *Route) GetCanVisitFreighterOnlyJH() bool {
 	if t.is_disabled {
 		return false
 	}
-	return bool(t.g.graph.CanVisitFreightersOnlyJHs)
+	return bool(t.g.Graph.CanVisitFreightersOnlyJHs)
 }
 
 type PathWithNavmap struct {
@@ -75,7 +75,7 @@ type PathWithNavmap struct {
 
 func (t *Route) GetPaths() []PathWithNavmap {
 	var results []PathWithNavmap
-	paths := t.g.graph.GetPaths(t.g.parents, t.g.dists, t.from_base_nickname, t.to_base_nickname)
+	paths := t.g.Graph.GetPaths(t.g.Parents, t.g.Time, t.from_base_nickname, t.to_base_nickname)
 
 	for _, path := range paths {
 		// path.NextName // nickname of object
@@ -109,7 +109,7 @@ func (t *Route) GetNameByIdsName(ids_name int) string {
 }
 
 func (t *Route) GetDist() int {
-	return trades.GetDist(t.g.graph, t.g.dists, t.from_base_nickname, t.to_base_nickname)
+	return trades.GetDist(t.g.Graph, t.g.Time, t.from_base_nickname, t.to_base_nickname)
 }
 
 func (t *Route) GetTime() float64 {
@@ -122,15 +122,15 @@ func (e *Exporter) AllRoutes(
 	for _, from_base := range bases {
 		for _, to_base := range bases {
 			// it can fly everywhere so we use it for checking
-			freighter_route := NewBaseRoute(e.freighter, from_base, to_base)
+			freighter_route := NewBaseRoute(e.Freighter, from_base, to_base)
 
 			if freighter_route.GetDist() > trades.INF/2 {
 				continue
 			}
 
 			from_base.AllRoutes = append(from_base.AllRoutes, &ComboRoute{
-				Transport: NewBaseRoute(e.transport, from_base, to_base),
-				Frigate:   NewBaseRoute(e.frigate, from_base, to_base),
+				Transport: NewBaseRoute(e.Transport, from_base, to_base),
+				Frigate:   NewBaseRoute(e.Frigate, from_base, to_base),
 				Freighter: freighter_route,
 			})
 		}

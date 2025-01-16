@@ -93,9 +93,9 @@ func (e *Exporter) TradePaths(
 
 			for _, selling_good_at_base := range commodity.Bases {
 				trade_route := &ComboTradeRoute{
-					Transport: NewTradeRoute(e.transport, buying_good, selling_good_at_base, commodity),
-					Frigate:   NewTradeRoute(e.frigate, buying_good, selling_good_at_base, commodity),
-					Freighter: NewTradeRoute(e.freighter, buying_good, selling_good_at_base, commodity),
+					Transport: NewTradeRoute(e.Transport, buying_good, selling_good_at_base, commodity),
+					Frigate:   NewTradeRoute(e.Frigate, buying_good, selling_good_at_base, commodity),
+					Freighter: NewTradeRoute(e.Freighter, buying_good, selling_good_at_base, commodity),
 				}
 
 				if trade_route.Transport.GetProffitPerV() <= 0 {

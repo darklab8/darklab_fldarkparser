@@ -97,9 +97,9 @@ type Exporter struct {
 	useful_bases_by_nick map[cfgtype.BaseUniNick]bool
 
 	ship_speeds trades.ShipSpeeds
-	transport   *GraphResults
-	freighter   *GraphResults
-	frigate     *GraphResults
+	Transport   *GraphResults
+	Freighter   *GraphResults
+	Frigate     *GraphResults
 
 	Factions     []Faction
 	Infocards    Infocards
@@ -142,9 +142,9 @@ func NewExporter(configs *configs_mapped.MappedConfigs, opts ...OptExport) *Expo
 
 type GraphResults struct {
 	e       *Exporter
-	graph   *trades.GameGraph
-	dists   [][]int
-	parents [][]trades.Parent
+	Graph   *trades.GameGraph
+	Time    [][]int
+	Parents [][]trades.Parent
 }
 
 func NewGraphResults(
@@ -166,9 +166,9 @@ func NewGraphResults(
 
 	return &GraphResults{
 		e:       e,
-		graph:   graph,
-		dists:   dists,
-		parents: parents,
+		Graph:   graph,
+		Time:    dists,
+		Parents: parents,
 	}
 }
 
@@ -225,17 +225,17 @@ func (e *Exporter) Export(options ExportOptions) *Exporter {
 
 		wg.Add(1)
 		go func() {
-			e.transport = NewGraphResults(e, e.ship_speeds.AvgTransportCruiseSpeed, trades.WithFreighterPaths(false), extra_graph_bases, options.MappingOptions)
+			e.Transport = NewGraphResults(e, e.ship_speeds.AvgTransportCruiseSpeed, trades.WithFreighterPaths(false), extra_graph_bases, options.MappingOptions)
 			wg.Done()
 		}()
 		wg.Add(1)
 		go func() {
-			e.freighter = NewGraphResults(e, e.ship_speeds.AvgFreighterCruiseSpeed, trades.WithFreighterPaths(true), extra_graph_bases, options.MappingOptions)
+			e.Freighter = NewGraphResults(e, e.ship_speeds.AvgFreighterCruiseSpeed, trades.WithFreighterPaths(true), extra_graph_bases, options.MappingOptions)
 			wg.Done()
 		}()
 		wg.Add(1)
 		go func() {
-			e.frigate = NewGraphResults(e, e.ship_speeds.AvgFrigateCruiseSpeed, trades.WithFreighterPaths(false), extra_graph_bases, options.MappingOptions)
+			e.Frigate = NewGraphResults(e, e.ship_speeds.AvgFrigateCruiseSpeed, trades.WithFreighterPaths(false), extra_graph_bases, options.MappingOptions)
 			wg.Done()
 		}()
 	}
@@ -280,7 +280,7 @@ func (e *Exporter) Export(options ExportOptions) *Exporter {
 		e.Hashes[nickname] = flhash.HashNickname(nickname)
 	}
 
-	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.transport)
+	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.Transport)
 	e.Bases = e.EnhanceBasesWithPobCrafts(e.Bases)
 	e.Bases = e.EnhanceBasesWithLoot(e.Bases)
 
@@ -296,14 +296,14 @@ func (e *Exporter) EnhanceBasesWithIsTransportReachable(
 
 	for _, base := range bases {
 		base_nickname := base.Nickname.ToStr()
-		if trades.GetDist(g.graph, g.dists, reachable_base_example, base_nickname) >= trades.INF/2 {
+		if trades.GetDist(g.Graph, g.Time, reachable_base_example, base_nickname) >= trades.INF/2 {
 			base.IsTransportUnreachable = true
 		}
 	}
 
 	enhance_with_transport_unrechability := func(Bases map[cfgtype.BaseUniNick]*GoodAtBase) {
 		for _, base := range Bases {
-			if trades.GetDist(g.graph, g.dists, reachable_base_example, string(base.BaseNickname)) >= trades.INF/2 {
+			if trades.GetDist(g.Graph, g.Time, reachable_base_example, string(base.BaseNickname)) >= trades.INF/2 {
 				base.IsTransportUnreachable = true
 			}
 		}

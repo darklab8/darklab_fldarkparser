@@ -31,17 +31,17 @@ func TestGetTrades(t *testing.T) {
 
 	wg.Add(1)
 	go func() {
-		e.transport = NewGraphResults(e, e.ship_speeds.AvgTransportCruiseSpeed, trades.WithFreighterPaths(false), mining_bases_by_system, graph_options)
+		e.Transport = NewGraphResults(e, e.ship_speeds.AvgTransportCruiseSpeed, trades.WithFreighterPaths(false), mining_bases_by_system, graph_options)
 		wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
-		e.frigate = NewGraphResults(e, e.ship_speeds.AvgFrigateCruiseSpeed, trades.WithFreighterPaths(false), mining_bases_by_system, graph_options)
+		e.Frigate = NewGraphResults(e, e.ship_speeds.AvgFrigateCruiseSpeed, trades.WithFreighterPaths(false), mining_bases_by_system, graph_options)
 		wg.Done()
 	}()
 	wg.Add(1)
 	go func() {
-		e.freighter = NewGraphResults(e, e.ship_speeds.AvgFreighterCruiseSpeed, trades.WithFreighterPaths(true), mining_bases_by_system, graph_options)
+		e.Freighter = NewGraphResults(e, e.ship_speeds.AvgFreighterCruiseSpeed, trades.WithFreighterPaths(true), mining_bases_by_system, graph_options)
 		wg.Done()
 	}()
 	e.Bases = e.GetBases()
@@ -59,7 +59,7 @@ func TestGetTrades(t *testing.T) {
 		}
 	}
 
-	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.transport)
+	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.Transport)
 
 	fmt.Println()
 }
