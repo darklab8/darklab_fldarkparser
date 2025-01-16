@@ -14,13 +14,13 @@ import (
 type InfocardKey string
 
 type InfocardPhrase struct {
-	Phrase string
-	Link   *string
-	Bold   bool
+	Phrase string  `json:"phrase"`
+	Link   *string `json:"link"`
+	Bold   bool    `json:"bold"`
 }
 
 type InfocardLine struct {
-	Phrases []InfocardPhrase
+	Phrases []InfocardPhrase `json:"phrases"`
 }
 
 func (i InfocardLine) ToStr() string {

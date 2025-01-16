@@ -63,6 +63,7 @@ type PoB struct {
 	Region      *string         `json:"region_name"`
 
 	ShopItems []*ShopItem `json:"shop_items"`
+	Infocard  Infocard    `json:"infocard"`
 }
 
 type PoBGood struct {
@@ -280,6 +281,7 @@ func (e *Exporter) GetPoBs() []*PoB {
 
 		// TODO add pob infocards here
 		e.Infocards[InfocardKey(pob.Nickname)] = sb.Lines
+		pob.Infocard = sb.Lines
 
 		pobs = append(pobs, pob)
 	}
