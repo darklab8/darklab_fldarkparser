@@ -19,9 +19,9 @@ import (
 
 type ShopItem struct {
 	pob_goods.ShopItem
-	Nickname string
-	Name     string
-	Category string
+	Nickname string `json:"nickname"`
+	Name     string `json:"name"`
+	Category string `json:"category"`
 }
 
 type DefenseMode int
@@ -42,51 +42,51 @@ func (d DefenseMode) ToStr() string {
 
 // also known as Player Base Station
 type PoB struct {
-	Nickname string
-	Name     string
+	Nickname string `json:"nickname"`
+	Name     string `json:"name"`
 
-	Pos         *string
-	Level       *int
-	Money       *int
-	Health      *int
-	DefenseMode *DefenseMode
+	Pos         *string      `json:"pos"`
+	Level       *int         `json:"level"`
+	Money       *int         `json:"money"`
+	Health      *int         `json:"health"`
+	DefenseMode *DefenseMode `json:"defense_mode"`
 
-	SystemNick  *string
-	SystemName  *string // SystemHash      *flhash.HashCode `json:"system"`      //: 2745655887,
-	FactionNick *string
-	FactionName *string // AffiliationHash *flhash.HashCode `json:"affiliation"` //: 2620,
+	SystemNick  *string `json:"system_nickname"`
+	SystemName  *string `json:"system_name"` // SystemHash      *flhash.HashCode `json:"system"`      //: 2745655887,
+	FactionNick *string `json:"faction_nickname"`
+	FactionName *string `json:"faction_name"` // AffiliationHash *flhash.HashCode `json:"affiliation"` //: 2620,
 
-	ForumThreadUrl *string
+	ForumThreadUrl *string `json:"forum_thread_url"`
 
-	BasePos     *cfgtype.Vector
-	SectorCoord *string
-	Region      *string
+	BasePos     *cfgtype.Vector `json:"base_pos"`
+	SectorCoord *string         `json:"sector_coord"`
+	Region      *string         `json:"region_name"`
 
-	ShopItems []*ShopItem
+	ShopItems []*ShopItem `json:"shop_items"`
 }
 
 type PoBGood struct {
-	Nickname              string
-	Name                  string
-	TotalBuyableFromBases int
-	TotalSellableToBases  int
+	Nickname              string `json:"nickname"`
+	Name                  string `json:"name"`
+	TotalBuyableFromBases int    `json:"total_buyable_from_bases"`
+	TotalSellableToBases  int    `json:"total_sellable_to_bases"`
 
-	BestPriceToBuy  *int
-	BestPriceToSell *int
+	BestPriceToBuy  *int `json:"best_price_to_buy"`
+	BestPriceToSell *int `json:"best_price_to_sell"`
 
-	Category string
-	Bases    []*PoBGoodBase
+	Category string         `json:"category"`
+	Bases    []*PoBGoodBase `json:"bases"`
 
-	AnyBaseSells bool
-	AnyBaseBuys  bool
+	AnyBaseSells bool `json:"any_base_sells"`
+	AnyBaseBuys  bool `json:"any_base_buys"`
 }
 
 func (good PoBGood) BaseSells() bool { return good.AnyBaseSells }
 func (good PoBGood) BaseBuys() bool  { return good.AnyBaseBuys }
 
 type PoBGoodBase struct {
-	ShopItem *ShopItem
-	Base     *PoB
+	ShopItem *ShopItem `json:"shop_item"`
+	Base     *PoB      `json:"base"`
 }
 
 func (e *Exporter) GetPoBGoods(pobs []*PoB) []*PoBGood {
