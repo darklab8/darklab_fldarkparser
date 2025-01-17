@@ -296,14 +296,14 @@ func (e *Exporter) EnhanceBasesWithIsTransportReachable(
 
 	for _, base := range bases {
 		base_nickname := base.Nickname.ToStr()
-		if trades.GetDist(g.Graph, g.Time, reachable_base_example, base_nickname) >= trades.INF/2 {
+		if trades.GetDist2(g.Graph, g.Time, reachable_base_example, base_nickname) >= trades.INF/2 {
 			base.IsTransportUnreachable = true
 		}
 	}
 
 	enhance_with_transport_unrechability := func(Bases map[cfgtype.BaseUniNick]*GoodAtBase) {
 		for _, base := range Bases {
-			if trades.GetDist(g.Graph, g.Time, reachable_base_example, string(base.BaseNickname)) >= trades.INF/2 {
+			if trades.GetDist2(g.Graph, g.Time, reachable_base_example, string(base.BaseNickname)) >= trades.INF/2 {
 				base.IsTransportUnreachable = true
 			}
 		}

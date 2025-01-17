@@ -68,7 +68,7 @@ func TestDijkstraAPSPWithGraph(t *testing.T) {
 		fmt.Println()
 	}
 
-	fmt.Println("a -> c = ", GetDist(graph, dist, "a", "c"), "path=", graph.GetPaths(parents, dist, "a", "c"))
-	fmt.Println("a -> b = ", GetDist(graph, dist, "a", "b"), "path=", GetPath(graph, parents, dist, "a", "b"))
-	fmt.Println("a -> d = ", GetDist(graph, dist, "a", "d"), "path=", GetPath(graph, parents, dist, "a", "d"))
+	fmt.Println("a -> c = ", GetDist2(graph, dist, "a", "c"), "path=", graph.GetPaths(parents, dist, "a", "c"))
+	fmt.Println("a -> b = ", GetDist2(graph, dist, "a", "b"), "path=", GetPath(graph, parents, dist, "a", "b"))
+	fmt.Println("a -> d = ", GetDist2(graph, dist, "a", "d"), "path=", GetPath(graph, parents, dist, "a", "d"))
 }

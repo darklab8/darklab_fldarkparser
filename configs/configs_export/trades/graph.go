@@ -5,6 +5,7 @@ Game graph simplifies for us conversion of data from Freelancer space simulator 
 */
 
 import (
+	"errors"
 	"math"
 	"reflect"
 )
@@ -62,14 +63,24 @@ func (f *GameGraph) SetIstRadelane(keya string) {
 	f.IsTradelane[VertexName(keya)] = true
 }
 
-func GetDist(f *GameGraph, dist [][]int, keya string, keyb string) int {
+func GetDist(f *GameGraph, dist [][]int, keya string, keyb string) (int, error) {
 	sourse_index, source_found := f.IndexByNick[VertexName(keya)]
 	target_index, target_found := f.IndexByNick[VertexName(keyb)]
 	_ = source_found
-	if !source_found || !target_found {
-		return INF
+	if !source_found && !target_found {
+		return INF, errors.New("both source and destination are not found")
 	}
-	return dist[sourse_index][target_index]
+	if !source_found {
+		return INF, errors.New("source is not found")
+	}
+	if !target_found {
+		return INF, errors.New("destination is not found")
+	}
+	return dist[sourse_index][target_index], nil
+}
+func GetDist2(f *GameGraph, dist [][]int, keya string, keyb string) int {
+	result, _ := GetDist(f, dist, keya, keyb)
+	return result
 }
 
 type Path struct {

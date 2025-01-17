@@ -109,7 +109,7 @@ func (t *Route) GetNameByIdsName(ids_name int) string {
 }
 
 func (t *Route) GetDist() int {
-	return trades.GetDist(t.g.Graph, t.g.Time, t.from_base_nickname, t.to_base_nickname)
+	return trades.GetDist2(t.g.Graph, t.g.Time, t.from_base_nickname, t.to_base_nickname)
 }
 
 func (t *Route) GetTime() float64 {
