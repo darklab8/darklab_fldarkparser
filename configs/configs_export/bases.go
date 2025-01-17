@@ -220,14 +220,14 @@ type Base struct {
 	Pos                cfgtype.Vector              `json:"pos"`
 	SectorCoord        string                      `json:"sector_coord"`
 
-	IsTransportUnreachable bool `json:"is_transport_unrechable"`
+	IsTransportUnreachable bool `json:"is_transport_unreachable"`
 
 	Missions           *BaseMissions `json:"-"`
 	baseAllTradeRoutes `json:"-"`
 	baseAllRoutes      `json:"-"`
 	*MiningInfo        `json:"mining_info,omitempty"`
 
-	Reachable bool `json:"is_rechhable"`
+	Reachable bool `json:"is_reachhable"`
 }
 
 type CommodityKey string
