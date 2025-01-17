@@ -30,10 +30,9 @@ func FixtureBases(t *testing.T) FixtureBasesOutput {
 	}
 	assert.True(t, found_goods, "expected finding some goods")
 
-	infocards := exporter.Infocards
 	for _, base := range bases {
 		if base.Nickname == "Br01_01_Base" {
-			lines := infocards[base.Infocard]
+			lines := base.Infocard
 			fmt.Println(base.Nickname, lines)
 			assert.Greater(t, len(lines), 0, "expected finding lines in infocard")
 			break

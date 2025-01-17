@@ -44,7 +44,7 @@ func (e *Exporter) EnhanceBasesWithPobCrafts(bases []*Base) []*Base {
 		Name:               e.Configs.CraftableBaseName(),
 		MarketGoodsPerNick: make(map[CommodityKey]MarketGood),
 		Nickname:           cfgtype.BaseUniNick(pob_crafts_nickname),
-		Infocard:           InfocardKey(pob_crafts_nickname),
+		InfocardKey:        InfocardKey(pob_crafts_nickname),
 		SystemNickname:     "neverwhere",
 		System:             "Neverwhere",
 		Region:             "Neverwhere",
@@ -172,6 +172,8 @@ func (e *Exporter) EnhanceBasesWithPobCrafts(bases []*Base) []*Base {
 	sb.WriteLineStr(`At the bottom of each item infocard it shows CRAFTING RECIPES`)
 
 	e.Infocards[InfocardKey(base.Nickname)] = sb.Lines
+
+	base.Infocard = sb.Lines
 
 	bases = append(bases, base)
 	return bases

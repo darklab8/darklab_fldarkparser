@@ -42,7 +42,7 @@ func (t *TradeRoute) GetProffitPerTime() float64 {
 	return t.GetProffitPerV() / t.Route.GetTime()
 }
 
-type BaseAllTradeRoutes struct {
+type baseAllTradeRoutes struct {
 	TradeRoutes        []*ComboTradeRoute
 	BestTransportRoute *TradeRoute
 	BestFrigateRoute   *TradeRoute

@@ -94,6 +94,7 @@ func (e *Exporter) GetBases() []*Base {
 		e.exportInfocards(InfocardKey(nickname), infocard_ids...)
 
 		base := &Base{
+			Missions:           &BaseMissions{},
 			Name:               name,
 			Nickname:           nickname,
 			NicknameHash:       flhash.HashNickname(nickname.ToStr()),
@@ -103,7 +104,7 @@ func (e *Exporter) GetBases() []*Base {
 			SystemNicknameHash: flhash.HashNickname(base.System.Get()),
 			StridName:          base.StridName.Get(),
 			InfocardID:         infocard_id,
-			Infocard:           InfocardKey(nickname),
+			InfocardKey:        InfocardKey(nickname),
 			File:               utils_types.FilePath(base.File.Get()),
 			BGCS_base_run_by:   base.BGCS_base_run_by.Get(),
 			MarketGoodsPerNick: market_goods_per_good_nick,
@@ -118,6 +119,8 @@ func (e *Exporter) GetBases() []*Base {
 		if found_system {
 			base.SectorCoord = VectorToSectorCoord(system, base.Pos)
 		}
+
+		base.Infocard = e.Infocards[InfocardKey(base.Nickname)]
 
 		results = append(results, base)
 	}
@@ -198,32 +201,33 @@ func FilterToUserfulBases(bases []*Base) []*Base {
 }
 
 type Base struct {
-	Name               string
-	Archetypes         []string
-	Nickname           cfgtype.BaseUniNick
-	NicknameHash       flhash.HashCode
-	FactionName        string
-	System             string
-	SystemNickname     string
-	SystemNicknameHash flhash.HashCode
-	Region             string
-	StridName          int
-	InfocardID         int
-	Infocard           InfocardKey
-	File               utils_types.FilePath
+	Name               string              `json:"name"`
+	Archetypes         []string            `json:"archetypes"`
+	Nickname           cfgtype.BaseUniNick `json:"nickname"`
+	NicknameHash       flhash.HashCode     `json:"nickname_hash"`
+	FactionName        string              `json:"faction_nickname"`
+	System             string              `json:"system_name"`
+	SystemNickname     string              `json:"system_nickname"`
+	SystemNicknameHash flhash.HashCode     `json:"system_nickname_hash"`
+	Region             string              `json:"region_name"`
+	StridName          int                 `json:"strid_name"`
+	InfocardID         int                 `json:"infocard_id"`
+	Infocard           Infocard            `json:"infocard"`
+	InfocardKey        InfocardKey
+	File               utils_types.FilePath `json:"file"`
 	BGCS_base_run_by   string
-	MarketGoodsPerNick map[CommodityKey]MarketGood
-	Pos                cfgtype.Vector
-	SectorCoord        string
+	MarketGoodsPerNick map[CommodityKey]MarketGood `json:"-"`
+	Pos                cfgtype.Vector              `json:"pos"`
+	SectorCoord        string                      `json:"sector_coord"`
 
-	IsTransportUnreachable bool
+	IsTransportUnreachable bool `json:"is_transport_unrechable"`
 
-	Missions BaseMissions
-	BaseAllTradeRoutes
-	BaseAllRoutes
-	MiningInfo
+	Missions           *BaseMissions `json:"-"`
+	baseAllTradeRoutes `json:"-"`
+	baseAllRoutes      `json:"-"`
+	*MiningInfo        `json:"mining_info,omitempty"`
 
-	Reachable bool
+	Reachable bool `json:"is_rechhable"`
 }
 
 type CommodityKey string

@@ -28,7 +28,7 @@ func NewBaseRoute(g *GraphResults, FromBase *Base, ToBase *Base) *BaseRoute {
 
 }
 
-type BaseAllRoutes struct {
+type baseAllRoutes struct {
 	AllRoutes []*ComboRoute
 }
 

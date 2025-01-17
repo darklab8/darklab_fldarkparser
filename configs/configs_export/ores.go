@@ -53,8 +53,8 @@ func (e *Exporter) GetOres(Commodities []*Commodity) []*Base {
 			location := zone.Pos.Get()
 			var added_goods map[string]bool = make(map[string]bool)
 			base := &Base{
+				MiningInfo:         &MiningInfo{},
 				Pos:                location,
-				MiningInfo:         MiningInfo{},
 				MarketGoodsPerNick: make(map[CommodityKey]MarketGood),
 			}
 			base.DynamicLootMin, _ = asteroids.LootableZone.DynamicLootMin.GetValue()
@@ -71,7 +71,7 @@ func (e *Exporter) GetOres(Commodities []*Commodity) []*Base {
 			base.InfocardID, _ = zone.IDsInfo.GetValue()
 			base.StridName, _ = zone.IdsName.GetValue()
 
-			base.Infocard = InfocardKey(base.Nickname)
+			base.InfocardKey = InfocardKey(base.Nickname)
 
 			base.Archetypes = append(base.Archetypes, "mining_operation")
 			base.FactionName = "Mining Field"
@@ -239,6 +239,8 @@ for Freelancer Discovery we also add possible sub products of refinery at player
 			}
 
 			e.Infocards[InfocardKey(base.Nickname)] = sb.Lines
+
+			base.Infocard = sb.Lines
 
 			bases = append(bases, base)
 

@@ -40,7 +40,7 @@ type Commodity struct {
 	PriceBestBaseBuysFor  int
 	PriceBestBaseSellsFor int
 	ProffitMargin         int
-	BaseAllTradeRoutes
+	baseAllTradeRoutes
 	Mass float64
 }
 

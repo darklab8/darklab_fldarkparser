@@ -53,7 +53,7 @@ func (e *Exporter) EnhanceBasesWithLoot(bases []*Base) []*Base {
 		Name:               "Lootable",
 		MarketGoodsPerNick: make(map[CommodityKey]MarketGood),
 		Nickname:           cfgtype.BaseUniNick(BaseLootableNickname),
-		Infocard:           InfocardKey(BaseLootableNickname),
+		InfocardKey:        InfocardKey(BaseLootableNickname),
 		SystemNickname:     "neverwhere",
 		System:             "Neverwhere",
 		Region:             "Neverwhere",
@@ -98,6 +98,8 @@ func (e *Exporter) EnhanceBasesWithLoot(bases []*Base) []*Base {
 	sb = append(sb, NewInfocardSimpleLine(`The content is findable in wrecks or drops from ships at missions`))
 
 	e.Infocards[InfocardKey(base.Nickname)] = sb
+
+	base.Infocard = sb
 
 	bases = append(bases, base)
 	return bases
