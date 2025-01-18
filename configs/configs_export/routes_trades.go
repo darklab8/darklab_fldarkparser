@@ -39,7 +39,7 @@ func (t *TradeRoute) GetProffitPerV() float64 {
 }
 
 func (t *TradeRoute) GetProffitPerTime() float64 {
-	return t.GetProffitPerV() / t.Route.GetTime()
+	return t.GetProffitPerV() / t.Route.GetTimeS()
 }
 
 type baseAllTradeRoutes struct {
@@ -103,7 +103,7 @@ func (e *Exporter) TradePaths(
 				}
 
 				// If u need to limit to specific min distance
-				// if trade_route.Transport.GetDist() < 60*10*350 {
+				// if trade_route.Transport.GetTime() < 60*10*350 {
 				// 	continue
 				// }
 

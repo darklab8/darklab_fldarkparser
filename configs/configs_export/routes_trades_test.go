@@ -55,11 +55,11 @@ func TestGetTrades(t *testing.T) {
 		}
 		for _, trade_route := range base.TradeRoutes {
 			trade_route.Transport.Route.GetPaths()
-			trade_route.Frigate.Route.GetDist()
+			trade_route.Frigate.Route.GetTimeMs()
 		}
 	}
 
-	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.Transport)
+	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.Transport, e.Freighter)
 
 	fmt.Println()
 }

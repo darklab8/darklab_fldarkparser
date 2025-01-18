@@ -27,6 +27,7 @@ type DijkstraAPSP struct {
 }
 
 const INF = math.MaxInt
+const INFthreshold = math.MaxInt / 1000
 
 // On using the below constructor,
 // edges must be added manually

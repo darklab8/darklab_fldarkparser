@@ -8,6 +8,8 @@ import (
 	"errors"
 	"math"
 	"reflect"
+
+	"github.com/darklab8/fl-configs/configs/cfgtype"
 )
 
 type VertexName string
@@ -63,7 +65,7 @@ func (f *GameGraph) SetIstRadelane(keya string) {
 	f.IsTradelane[VertexName(keya)] = true
 }
 
-func GetDist(f *GameGraph, dist [][]int, keya string, keyb string) (int, error) {
+func GetTimeMs(f *GameGraph, dist [][]int, keya string, keyb string) (cfgtype.MillisecondsI, error) {
 	sourse_index, source_found := f.IndexByNick[VertexName(keya)]
 	target_index, target_found := f.IndexByNick[VertexName(keyb)]
 	_ = source_found
@@ -78,8 +80,8 @@ func GetDist(f *GameGraph, dist [][]int, keya string, keyb string) (int, error) 
 	}
 	return dist[sourse_index][target_index], nil
 }
-func GetDist2(f *GameGraph, dist [][]int, keya string, keyb string) int {
-	result, _ := GetDist(f, dist, keya, keyb)
+func GetTimeMs2(f *GameGraph, dist [][]int, keya string, keyb string) cfgtype.MillisecondsI {
+	result, _ := GetTimeMs(f, dist, keya, keyb)
 	return result
 }
 

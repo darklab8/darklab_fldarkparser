@@ -108,12 +108,12 @@ func (t *Route) GetNameByIdsName(ids_name int) string {
 	return string(t.g.e.Configs.Infocards.Infonames[ids_name])
 }
 
-func (t *Route) GetDist() int {
-	return trades.GetDist2(t.g.Graph, t.g.Time, t.from_base_nickname, t.to_base_nickname)
+func (t *Route) GetTimeMs() cfgtype.MillisecondsI {
+	return trades.GetTimeMs2(t.g.Graph, t.g.Time, t.from_base_nickname, t.to_base_nickname)
 }
 
-func (t *Route) GetTime() float64 {
-	return float64(t.GetDist())/trades.PrecisionMultipiler + float64(trades.BaseDockingDelay)
+func (t *Route) GetTimeS() cfgtype.Seconds {
+	return float64(t.GetTimeMs())/trades.PrecisionMultipiler + float64(trades.BaseDockingDelay)
 }
 
 func (e *Exporter) AllRoutes(
@@ -124,7 +124,7 @@ func (e *Exporter) AllRoutes(
 			// it can fly everywhere so we use it for checking
 			freighter_route := NewBaseRoute(e.Freighter, from_base, to_base)
 
-			if freighter_route.GetDist() > trades.INF/2 {
+			if freighter_route.GetTimeMs() > trades.INF/2 {
 				continue
 			}
 

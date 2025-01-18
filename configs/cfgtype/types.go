@@ -11,8 +11,10 @@ type TractorID string
 type FactionNick string
 
 type Milliseconds = float64
-
 type Seconds = float64
+
+type MillisecondsI = int
+type SecondsI = int
 
 type BaseUniNick string
 

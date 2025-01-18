@@ -280,7 +280,7 @@ func (e *Exporter) Export(options ExportOptions) *Exporter {
 		e.Hashes[nickname] = flhash.HashNickname(nickname)
 	}
 
-	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.Transport)
+	e.EnhanceBasesWithIsTransportReachable(e.Bases, e.Transport, e.Freighter)
 	e.Bases = e.EnhanceBasesWithPobCrafts(e.Bases)
 	e.Bases = e.EnhanceBasesWithLoot(e.Bases)
 
@@ -290,20 +290,25 @@ func (e *Exporter) Export(options ExportOptions) *Exporter {
 func (e *Exporter) EnhanceBasesWithIsTransportReachable(
 	bases []*Base,
 	transports_graph *GraphResults,
+	frighter_graph *GraphResults,
 ) {
 	reachable_base_example := "li01_01_base"
-	g := transports_graph
+	tg := transports_graph
+	fg := frighter_graph
 
 	for _, base := range bases {
 		base_nickname := base.Nickname.ToStr()
-		if trades.GetDist2(g.Graph, g.Time, reachable_base_example, base_nickname) >= trades.INF/2 {
+		if trades.GetTimeMs2(tg.Graph, tg.Time, reachable_base_example, base_nickname) >= trades.INFthreshold {
 			base.IsTransportUnreachable = true
+		}
+		if trades.GetTimeMs2(fg.Graph, fg.Time, reachable_base_example, base_nickname) < trades.INFthreshold {
+			base.Reachable = true
 		}
 	}
 
 	enhance_with_transport_unrechability := func(Bases map[cfgtype.BaseUniNick]*GoodAtBase) {
 		for _, base := range Bases {
-			if trades.GetDist2(g.Graph, g.Time, reachable_base_example, string(base.BaseNickname)) >= trades.INF/2 {
+			if trades.GetTimeMs2(tg.Graph, tg.Time, reachable_base_example, string(base.BaseNickname)) >= trades.INF/2 {
 				base.IsTransportUnreachable = true
 			}
 		}

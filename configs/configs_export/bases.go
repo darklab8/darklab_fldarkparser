@@ -177,6 +177,11 @@ func EnhanceBasesWithServerOverrides(bases []*Base, commodities []*Commodity) {
 func FilterToUserfulBases(bases []*Base) []*Base {
 	var useful_bases []*Base = make([]*Base, 0, len(bases))
 	for _, item := range bases {
+		if item.Reachable {
+			useful_bases = append(useful_bases, item)
+			continue
+		}
+
 		if (item.Name == "Object Unknown" || item.Name == "") && len(item.MarketGoodsPerNick) == 0 {
 			continue
 		}
@@ -194,17 +199,16 @@ func FilterToUserfulBases(bases []*Base) []*Base {
 		if is_invisible {
 			continue
 		}
-		item.Reachable = true
 		useful_bases = append(useful_bases, item)
 	}
 	return useful_bases
 }
 
 type Base struct {
-	Name               string              `json:"name"`
-	Archetypes         []string            `json:"archetypes"`
+	Name               string              `json:"name"`       // Infocard Name
+	Archetypes         []string            `json:"archetypes"` // Base Archetypes
 	Nickname           cfgtype.BaseUniNick `json:"nickname"`
-	NicknameHash       flhash.HashCode     `json:"nickname_hash"`
+	NicknameHash       flhash.HashCode     `json:"nickname_hash"` // Flhash of nickname
 	FactionName        string              `json:"faction_nickname"`
 	System             string              `json:"system_name"`
 	SystemNickname     string              `json:"system_nickname"`
@@ -220,14 +224,14 @@ type Base struct {
 	Pos                cfgtype.Vector              `json:"pos"`
 	SectorCoord        string                      `json:"sector_coord"`
 
-	IsTransportUnreachable bool `json:"is_transport_unreachable"`
+	IsTransportUnreachable bool `json:"is_transport_unreachable"` // Check if base is NOT reachable from manhattan by Transport through Graph method (at Discovery base has to have Transport dockable spheres)
 
 	Missions           *BaseMissions `json:"-"`
 	baseAllTradeRoutes `json:"-"`
 	baseAllRoutes      `json:"-"`
 	*MiningInfo        `json:"mining_info,omitempty"`
 
-	Reachable bool `json:"is_reachhable"`
+	Reachable bool `json:"is_reachhable"` // is base IS Rechable by frighter from Manhattan
 }
 
 type CommodityKey string

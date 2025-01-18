@@ -45,15 +45,15 @@ func TestTradeRoutes(t *testing.T) {
 
 		// This version lf algorithm can provide you with distances only originating from space bases (and not proxy bases)
 		// The rest of starting points were excluded for performance reasons
-		fmt.Println(`GetDist(graph, dist, "li01_01_base", "li01_to_li02")=`, GetDist2(graph, dist, "li01_01_base", "li01_to_li02"))
-		fmt.Println(`GetDist(graph, dist, "li01_01_base", "li02_to_li01")=`, GetDist2(graph, dist, "li01_01_base", "li02_to_li01"))
-		fmt.Println(`GetDist(graph, dist, "li01_01_base", "li12_02_base")=`, GetDist2(graph, dist, "li01_01_base", "li12_02_base"))
-		dist1 := GetDist2(graph, dist, "li01_01_base", "li01_02_base")
-		dist2 := GetDist2(graph, dist, "li01_01_base", "br01_01_base")
-		dist3 := GetDist2(graph, dist, "li01_01_base", "li12_02_base")
-		fmt.Println(`GetDist(graph, dist, "li01_01_base", "li01_02_base")`, dist1)
-		fmt.Println(`GetDist(graph, dist, "li01_01_base", "br01_01_base")`, dist2)
-		fmt.Println(`GetDist(graph, dist, "li01_01_base", "li12_02_base")`, dist3)
+		fmt.Println(`GetTimeMs2(graph, dist, "li01_01_base", "li01_to_li02")=`, GetTimeMs2(graph, dist, "li01_01_base", "li01_to_li02"))
+		fmt.Println(`GetTimeMs2(graph, dist, "li01_01_base", "li02_to_li01")=`, GetTimeMs2(graph, dist, "li01_01_base", "li02_to_li01"))
+		fmt.Println(`GetTimeMs2(graph, dist, "li01_01_base", "li12_02_base")=`, GetTimeMs2(graph, dist, "li01_01_base", "li12_02_base"))
+		dist1 := GetTimeMs2(graph, dist, "li01_01_base", "li01_02_base")
+		dist2 := GetTimeMs2(graph, dist, "li01_01_base", "br01_01_base")
+		dist3 := GetTimeMs2(graph, dist, "li01_01_base", "li12_02_base")
+		fmt.Println(`GetTimeMs2(graph, dist, "li01_01_base", "li01_02_base")`, dist1)
+		fmt.Println(`GetTimeMs2(graph, dist, "li01_01_base", "br01_01_base")`, dist2)
+		fmt.Println(`GetTimeMs2(graph, dist, "li01_01_base", "li12_02_base")`, dist3)
 		assert.Greater(t, dist1, 0)
 		assert.Greater(t, dist2, 0)
 		assert.Greater(t, dist3, 0)
@@ -72,7 +72,7 @@ func TestTradeRoutes(t *testing.T) {
 		// source := "hi02_01_base"
 		// target := "ga01_02_base" // New London Atmosphere/Landing Site
 
-		dist_ := GetDist2(graph, dist, source, target)
+		dist_ := GetTimeMs2(graph, dist, source, target)
 		fmt.Println("dist=", dist_)
 		fmt.Println("time_total=", graph.GetTimeForDist(float64(dist_)))
 		min := math.Floor(float64(graph.GetTimeForDist(float64(dist_))) / 60)
