@@ -4,6 +4,7 @@ Package with reusable code for discovery of files and other reusable stuff like 
 package filefind
 
 import (
+	"fmt"
 	"io/fs"
 	"path/filepath"
 	"strings"
@@ -41,6 +42,12 @@ func FindConfigs(folderpath utils_types.FilePath) *Filesystem {
 	}
 
 	err := filepath.WalkDir(string(folderpath), func(path string, d fs.DirEntry, err error) error {
+
+		// Disco dev files
+		if strings.Contains(path, "SERVICE") {
+			fmt.Println()
+			return nil
+		}
 
 		if !strings.Contains(path, ".ini") &&
 			!strings.Contains(path, ".txt") &&
