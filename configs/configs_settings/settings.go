@@ -16,8 +16,6 @@ type ConfEnvVars struct {
 	FreelancerFolder            utils_types.FilePath
 	FreelancerFolderFailback    utils_types.FilePath
 	MaxCores                    *int
-	IsDisabledTradeRouting      bool
-	SimplifiedTradeRoutesCalc   bool
 }
 
 var Env ConfEnvVars
@@ -34,10 +32,8 @@ func GetEnvs(envs *enverant.Enverant) ConfEnvVars {
 		FreelancerFolder:            getGameLocation(envs),
 		FreelancerFolderFailback:    utils_types.FilePath(envs.GetStrOr("FREELANCER_FOLDER_FAILBACK", "")),
 		MaxCores:                    envs.GetPtrInt("CONFIGS_MAX_CORES"),
-		IsDisabledTradeRouting:      envs.GetBoolOr("CONFIGS_DISABLE_TRADE_ROUTES", false),
 	}
 
-	Env.SimplifiedTradeRoutesCalc = Env.IsDevEnv
 	return Env
 }
 
