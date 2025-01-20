@@ -37,7 +37,7 @@ type Base struct {
 	AffiliationHash    *flhash.HashCode `json:"affiliation"` //: 2620,
 	Level              *int             `json:"level"`       //: 1,
 	Money              *int             `json:"money"`       //: 0,
-	Health             *int             `json:"health"`      //: 50,
+	Health             *float64         `json:"health"`      //: 50,
 	DefenseMode        *int             `json:"defensemode"` //: 1,
 	InfocardParagraphs []string         `json:"infocard_paragraphs"`
 
